@@ -22,11 +22,16 @@ filetype indent plugin on
 
 " indent
 set expandtab
+set smarttab
 set autoindent
 set smartindent
 set cindent
 set ignorecase
 set hls
+
+" the WiLd menu
+set wildmode=longest:full
+set wildmenu
 
 " tab and space
 set shiftwidth=4
@@ -50,7 +55,7 @@ endif
 " set line break
 set nowrap
 set linebreak
-"set showbreak=>>\ 
+"set showbreak=>>\
 
 " other settings
 set nu
@@ -61,9 +66,34 @@ set bs=2
 set nocompatible
 set showcmd
 set clipboard=unnamed
+set hid
+" Ignore case when searching
+set ignorecase
+
+" When searching try to be smart about cases
+set smartcase
+
+" Highlight search results
+set hlsearch
+
+" Makes search act like search in modern browsers
+set incsearch
+
+" Don't redraw while executing macros (good performance config)
+set lazyredraw
+
+" For regular expressions turn magic on
+set magic
+
+" Show matching brackets when text indicator is over them
+set showmatch
+
+" Configure backspace so it acts as it should act
+set backspace=eol,start,indent
+set whichwrap+=<,>,h,l
 
 " invisible character
-"set nolist
+set nolist
 "set listchars=tab:▸\ ,trail:▝,eol:¬
 
 " mininum split window size
@@ -106,7 +136,7 @@ nmap k gk
 vmap j gj
 vmap k gk
 imap <C-D>      <DEL>
-nmap <F7>       :w<CR>:!perl %<CR>
+nmap <F6>       :w<CR>:!perl %<CR>
 nmap <C-L>      :set nu!<CR>
 nmap <C-n>      gt
 nmap <C-p>      gT
@@ -114,8 +144,8 @@ imap <C-a>      <HOME>
 imap <C-e>      <END>
 imap <C-f>      <RIGHT>
 imap <C-b>      <LEFT>
-nmap <C-J>      ddp==
 nmap <C-K>      ddkP==
+nmap <C-J>      ddp==
 nmap <Leader>n  :NERDTreeToggle<CR>
 nmap <Leader>g  :GundoToggle<CR>
 nmap <Leader>b  :e ++enc=big5<CR>
@@ -132,9 +162,6 @@ vmap <Leader>v  "+y
 
 " ctrl-tab only works on gui
 nmap <C-Tab>    gt
-
-" hexHighlight plugin
-nmap <Leader>l :call HexHighlight()<CR>
 
 " Show syntax highlighting groups for word under cursor
 nmap <C-C> :call <SID>SynStack()<CR>
@@ -179,7 +206,7 @@ set statusline+=[%{&ft!=''?&ft:'none'}]
 set statusline+=\ \ 
 set statusline+=Col\ %c,\ Line\ %l/%L
 set statusline+=\ \ 
-set statusline+=%p%%\ 
+set statusline+=%p%%
 
 " remove preview window from omni complete
 set completeopt-=preview
@@ -203,9 +230,6 @@ let g:user_zen_settings = {
 let g:clang_snippets = 1
 let g:clang_complete_copen = 0
 let g:clang_snippets_engine = 'snipmate'
-
-" vjde for android
-let g:vjde_lib_path = '/usr/local/Cellar/android-sdk/r18/platforms/android-15/android.jar'
 
 if has("gui_running")
     " set colors
@@ -237,3 +261,16 @@ if has("gui_running")
         set fuopt=maxhorz,maxvert
     endif
 endif
+
+""""""""""""""""""""""""""""""
+" Automatic Trim Whitespace on save
+"""""""""""""""""""""""""""
+"" Stop those pep8 warnings!
+fun! <SID>StripTrailingWhitespaces()
+    let l = line(".")
+    let c = col(".")
+    %s/\s\+$//e
+    call cursor(l, c)
+endfun
+autocmd FileType c,cpp,java,php,ruby,python autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
+
