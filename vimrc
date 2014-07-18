@@ -10,15 +10,12 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 " bundles
-Bundle 'dm4/vim-boshiamy'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'scrooloose/nerdtree'
 Bundle 'msanders/snipmate.vim'
 Bundle 'tpope/vim-surround'
 Bundle 'sjl/gundo.vim'
-Bundle 'simplecommenter'
 Bundle 'AutoComplPop'
-Bundle 'hexHighlight.vim'
 
 " vundle settings
 filetype indent plugin on
@@ -66,8 +63,8 @@ set showcmd
 set clipboard=unnamed
 
 " invisible character
-set nolist
-set listchars=tab:▸\ ,trail:▝,eol:¬
+"set nolist
+"set listchars=tab:▸\ ,trail:▝,eol:¬
 
 " mininum split window size
 set winminheight=0
