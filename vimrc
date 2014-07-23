@@ -50,12 +50,12 @@ if exists("*mkdir") && !isdirectory($HOME."/.vim/backup")
     call mkdir($HOME."/.vim/backup")
 endif
 
-" undo
-set undofile
-set undodir=$HOME/.vim/undo/
-if exists("*mkdir") && !isdirectory($HOME."/.vim/undo")
-    call mkdir($HOME."/.vim/undo")
-endif
+" undo, need vim 7.3
+" set undofile
+" set undodir=$HOME/.vim/undo/
+" if exists("*mkdir") && !isdirectory($HOME."/.vim/undo")
+"    call mkdir($HOME."/.vim/undo")
+" endif
 
 " set line break
 set wrap
@@ -140,7 +140,7 @@ vmap j gj
 vmap k gk
 imap <C-D>      <DEL>
 nmap <F6>       :w<CR>:call Flake8()<CR>
-nmap <C-*>      :set nu!<CR>
+nmap <Leader>m  :set nu!<CR>
 imap <C-a>      <HOME>
 imap <C-e>      <END>
 imap <C-f>      <RIGHT>
