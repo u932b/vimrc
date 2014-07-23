@@ -3,6 +3,10 @@
 "               "
 """""""""""""""""
 
+"language settings
+set langmenu=none
+language messages en_US
+
 " vundle settings
 filetype off
 set rtp+=~/.vim/bundle/vundle/
@@ -16,6 +20,7 @@ Bundle 'msanders/snipmate.vim'
 Bundle 'tpope/vim-surround'
 Bundle 'sjl/gundo.vim'
 Bundle 'AutoComplPop'
+Bundle 'nvie/vim-flake8'
 
 " vundle settings
 filetype indent plugin on
@@ -53,15 +58,18 @@ if exists("*mkdir") && !isdirectory($HOME."/.vim/undo")
 endif
 
 " set line break
-set nowrap
+set wrap
 set linebreak
-"set showbreak=>>\
+set showbreak=>>\
+"" these two work with nowrap
+" :set sidescroll=5
+" :set listchars+=precedes:`,extends:`
 
 " other settings
 set nu
 syntax on
 set ruler
-"set mouse=a
+set mouse=a
 set bs=2
 set nocompatible
 set showcmd
@@ -114,11 +122,6 @@ autocmd BufReadPost,BufNewFile httpd*.conf set filetype=apache
 " Show diff when git commit
 autocmd FileType gitcommit DiffGitCached
 
-
-" for taglist
-"autocmd BufWritePost *.cpp silent exe "!exctags -R --c++-kinds=+p --fields=+iaS --extra=+q ."
-"autocmd BufWritePost *.h silent exe "!exctags -R --c++-kinds=+p --fields=+iaS --extra=+q ."
-
 " Save last postion
 if has("autocmd")
    autocmd BufReadPost *
@@ -136,16 +139,14 @@ nmap k gk
 vmap j gj
 vmap k gk
 imap <C-D>      <DEL>
-nmap <F6>       :w<CR>:!perl %<CR>
-nmap <C-L>      :set nu!<CR>
-nmap <C-n>      gt
-nmap <C-p>      gT
+nmap <F6>       :w<CR>:call Flake8()<CR>
+nmap <C-*>      :set nu!<CR>
 imap <C-a>      <HOME>
 imap <C-e>      <END>
 imap <C-f>      <RIGHT>
 imap <C-b>      <LEFT>
-nmap <C-K>      ddkP==
-nmap <C-J>      ddp==
+nmap <C-D>      ddkP==
+nmap <C-U>      ddp==
 nmap <Leader>n  :NERDTreeToggle<CR>
 nmap <Leader>g  :GundoToggle<CR>
 nmap <Leader>b  :e ++enc=big5<CR>
@@ -192,6 +193,15 @@ autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
 autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
+
+" Automatic Trim Whitespace on save
+fun! <SID>StripTrailingWhitespaces()
+    let l = line(".")
+    let c = col(".")
+    %s/\s\+$//e
+    call cursor(l, c)
+endfun
+autocmd FileType c,cpp,java,php,ruby,python autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
 
 " set status line
 set laststatus=2
@@ -262,15 +272,4 @@ if has("gui_running")
     endif
 endif
 
-""""""""""""""""""""""""""""""
-" Automatic Trim Whitespace on save
-"""""""""""""""""""""""""""
-"" Stop those pep8 warnings!
-fun! <SID>StripTrailingWhitespaces()
-    let l = line(".")
-    let c = col(".")
-    %s/\s\+$//e
-    call cursor(l, c)
-endfun
-autocmd FileType c,cpp,java,php,ruby,python autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
 
