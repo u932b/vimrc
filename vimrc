@@ -223,9 +223,7 @@ set completeopt-=preview
 
 " NERDTree
 let NERDTreeQuitOnOpen=1
-
-" simplecommenter
-let g:oneline_comment_padding = ''
+let g:NERDTreeDirArrows=0
 
 " vimim
 let g:vimim_cloud = -1
