@@ -140,7 +140,7 @@ vmap j gj
 vmap k gk
 imap <C-D>      <DEL>
 nmap <F6>       :w<CR>:call Flake8()<CR>
-nmap <C-*>      :set nu!<CR>
+nmap <Leader>m  :set nu!<CR>
 imap <C-a>      <HOME>
 imap <C-e>      <END>
 imap <C-f>      <RIGHT>
