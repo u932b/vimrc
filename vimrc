@@ -14,15 +14,17 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 " bundles
-Bundle 'Lokaltog/vim-easymotion'
-Bundle 'scrooloose/nerdtree'
-Bundle 'msanders/snipmate.vim'
-Bundle 'tpope/vim-surround'
-Bundle 'sjl/gundo.vim'
+" Bundle 'Lokaltog/vim-easymotion'
+" Bundle 'scrooloose/nerdtree'
+" Bundle 'msanders/snipmate.vim'
+" Bundle 'tpope/vim-surround'
+" Bundle 'sjl/gundo.vim'
 Bundle 'AutoComplPop'
 Bundle 'nvie/vim-flake8'
-Bundle 'tpope/vim-fugitive'
-Bundle 'klen/python-mode'
+" Bundle 'tpope/vim-fugitive'
+" Bundle 'jiangmiao/auto-pairs'
+Bundle 'Townk/vim-autoclose'
+" Bundle 'klen/python-mode'
 
 
 " vundle settings
@@ -134,38 +136,38 @@ if has("autocmd")
 endif
 
 " key mapping
-let mapleader=","
-nmap ; :
-vmap ; :
-nmap j gj
-nmap k gk
-vmap j gj
-vmap k gk
-imap <C-D>      <DEL>
-nmap <F6>       :w<CR>:call Flake8()<CR>
-nmap <Leader>m  :set nu!<CR>
-imap <C-a>      <HOME>
-imap <C-e>      <END>
-imap <C-f>      <RIGHT>
-imap <C-b>      <LEFT>
-nmap <C-D>      ddkP==
-nmap <C-U>      ddp==
-nmap <Leader>n  :NERDTreeToggle<CR>
-nmap <Leader>g  :GundoToggle<CR>
-nmap <Leader>b  :e ++enc=big5<CR>
-nmap <Leader>u  :e ++enc=utf-8<CR>
-nmap <Leader>p  :set paste!<CR>
-nmap <Leader>r  :set wrap!<CR>
-nmap <Leader>ev :tabnew $MYVIMRC<CR>
-nmap <Leader>h  :noh<CR>
-nmap <Leader>s  :w<CR>:source %<CR>
-nmap <Leader>l  :set list!<CR>
+" let mapleader=","
+" nmap ; :
+" vmap ; :
+" nmap j gj
+" nmap k gk
+" vmap j gj
+" vmap k gk
+" imap <C-D>      <DEL>
+" nmap <F6>       :w<CR>:call Flake8()<CR>
+" nmap <Leader>m  :set nu!<CR>
+" imap <C-a>      <HOME>
+" imap <C-e>      <END>
+" imap <C-f>      <RIGHT>
+" imap <C-b>      <LEFT>
+" nmap <C-D>      ddkP==
+" nmap <C-U>      ddp==
+" nmap <Leader>n  :NERDTreeToggle<CR>
+" nmap <Leader>g  :GundoToggle<CR>
+" nmap <Leader>b  :e ++enc=big5<CR>
+" nmap <Leader>u  :e ++enc=utf-8<CR>
+" nmap <Leader>p  :set paste!<CR>
+" nmap <Leader>r  :set wrap!<CR>
+" nmap <Leader>ev :tabnew $MYVIMRC<CR>
+" nmap <Leader>h  :noh<CR>
+" nmap <Leader>s  :w<CR>:source %<CR>
+" nmap <Leader>l  :set list!<CR>
 
-" for fakeclip
-vmap <Leader>v  "+y
-
-" ctrl-tab only works on gui
-nmap <C-Tab>    gt
+" " for fakeclip
+" vmap <Leader>v  "+y
+" 
+" " ctrl-tab only works on gui
+" nmap <C-Tab>    gt
 
 " Show syntax highlighting groups for word under cursor
 nmap <C-C> :call <SID>SynStack()<CR>
@@ -221,26 +223,26 @@ set statusline+=Col\ %c,\ Line\ %l/%L
 set statusline+=\ \ 
 set statusline+=%p%%
 
-" remove preview window from omni complete
-set completeopt-=preview
-
-" NERDTree
-let NERDTreeQuitOnOpen=1
-let g:NERDTreeDirArrows=0
-
-" vimim
-let g:vimim_cloud = -1
-let g:vimim_custom_color = -1
+" " remove preview window from omni complete
+" set completeopt-=preview
+" 
+" " NERDTree
+" let NERDTreeQuitOnOpen=1
+" let g:NERDTreeDirArrows=0
+" 
+" " vimim
+" let g:vimim_cloud = -1
+" let g:vimim_custom_color = -1
 
 " zencoding
 let g:user_zen_settings = {
 \  'indentation' : '    '
 \}
 
-" clang_complete
-let g:clang_snippets = 1
-let g:clang_complete_copen = 0
-let g:clang_snippets_engine = 'snipmate'
+" " clang_complete
+" let g:clang_snippets = 1
+" let g:clang_complete_copen = 0
+" let g:clang_snippets_engine = 'snipmate'
 
 if has("gui_running")
     " set colors
