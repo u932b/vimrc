@@ -1,10 +1,7 @@
 Installation
 ------------
 
-    $ git clone git://github.com/ChengHsi/vimrc.git ~/.vim
-    $ git clone git://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
-    $ ln -s ~/.vim/vimrc ~/.vimrc
-    $ ln -s ~/.vim/vimrc ~/.gvimrc
+    $ git clone git://github.com/ChengHsi/vimrc.git ~/.vim && . ~/.vim/setup.sh
 
 Then, in `vim`
 
