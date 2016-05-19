@@ -165,9 +165,13 @@ endif
 
 " " for fakeclip
 " vmap <Leader>v  "+y
-" 
+"
 " " ctrl-tab only works on gui
 " nmap <C-Tab>    gt
+noremap <Up> <NOP>
+noremap <Down> <NOP>
+noremap <Left> <NOP>
+noremap <Right> <NOP>
 
 " Show syntax highlighting groups for word under cursor
 nmap <C-C> :call <SID>SynStack()<CR>
