@@ -70,6 +70,10 @@ set showbreak=>>\
 " :set sidescroll=5
 " :set listchars+=precedes:`,extends:`
 
+" VIM 7.4
+set relativenumber
+set number
+
 " other settings
 set nu
 syntax on
