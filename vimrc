@@ -26,6 +26,13 @@ Bundle 'nvie/vim-flake8'
 Bundle 'Townk/vim-autoclose'
 " Bundle 'klen/python-mode'
 
+" Markdown support
+Bundle 'godlygeek/tabular'
+Bundle 'plasticboy/vim-markdown'
+
+" C++ Syntax Check
+Bundle 'scrooloose/syntastic'
+
 
 " vundle settings
 filetype indent plugin on
@@ -287,6 +294,10 @@ endif
 let g:flake8_ignore="E501"
 autocmd BufWritePost *.py call Flake8()
 
+" vim-markdown
+let g:vim_markdown_folding_disabled = 1
+let g:vim_markdown_folding_style_pythonic = 1
+let g:vim_markdown_math = 1
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Python-mode
 " Activate rope
@@ -331,4 +342,7 @@ let g:pymode_syntax_space_errors = g:pymode_syntax_all
 
 " Don't autofold code
 let g:pymode_folding = 0
+
+let g:synstatic_cpp_checkers= ['clang_check']
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
