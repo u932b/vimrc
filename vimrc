@@ -19,6 +19,7 @@ Bundle 'gmarik/vundle'
 " Bundle 'msanders/snipmate.vim'
 " Bundle 'tpope/vim-surround'
 " Bundle 'sjl/gundo.vim'
+Bundle 'derekwyatt/vim-scala'
 Bundle 'AutoComplPop'
 Bundle 'nvie/vim-flake8'
 " Bundle 'tpope/vim-fugitive'
@@ -68,6 +69,7 @@ endif
 " if exists("*mkdir") && !isdirectory($HOME."/.vim/undo")
 "    call mkdir($HOME."/.vim/undo")
 " endif
+set clipboard=unnamed
 
 " set line break
 set wrap
@@ -79,7 +81,7 @@ set showbreak=>>\
 
 " VIM 7.4
 set relativenumber
-set number
+"set number
 
 " other settings
 set nu
@@ -221,7 +223,8 @@ fun! <SID>StripTrailingWhitespaces()
     %s/\s\+$//e
     call cursor(l, c)
 endfun
-autocmd FileType c,cpp,java,php,ruby,python autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
+autocmd FileType c,cpp,java,php,ruby,python autocmd BufWritePre <buffer> :call
+            \ <SID>StripTrailingWhitespaces()
 
 " set status line
 set laststatus=2
@@ -229,22 +232,22 @@ set statusline=%{(&paste)?'[p]':''}
 set statusline+=%m%f
 set statusline+=%=
 set statusline+=(%{mode()})
-set statusline+=\ \ 
+set statusline+=\ \
 set statusline+=[%{&fenc}]
-set statusline+=\ \ 
+set statusline+=\ \
 set statusline+=[%{&ft!=''?&ft:'none'}]
-set statusline+=\ \ 
+set statusline+=\ \
 set statusline+=Col\ %c,\ Line\ %l/%L
-set statusline+=\ \ 
+set statusline+=\ \
 set statusline+=%p%%
 
 " " remove preview window from omni complete
 " set completeopt-=preview
-" 
+"
 " " NERDTree
 " let NERDTreeQuitOnOpen=1
 " let g:NERDTreeDirArrows=0
-" 
+"
 " " vimim
 " let g:vimim_cloud = -1
 " let g:vimim_custom_color = -1
@@ -290,6 +293,15 @@ if has("gui_running")
     endif
 endif
 
+" if exists('+colorcolumn')
+"       highlight ColorColumn ctermbg=91
+"       set colorcolumn=80
+"   else
+"         au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
+"     endif
+" :au BufWinEnter * let w:m1=matchadd('Search', '\%<80v.\%>77v', -1)
+:au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
+
 "ignore E501 when dooing flake8 tests
 let g:flake8_ignore="E501"
 autocmd BufWritePost *.py call Flake8()
@@ -298,7 +310,7 @@ autocmd BufWritePost *.py call Flake8()
 let g:vim_markdown_folding_disabled = 1
 let g:vim_markdown_folding_style_pythonic = 1
 let g:vim_markdown_math = 1
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Python-mode
 " Activate rope
 " Keys:
@@ -343,6 +355,14 @@ let g:pymode_syntax_space_errors = g:pymode_syntax_all
 " Don't autofold code
 let g:pymode_folding = 0
 
+let g:syntastic_python_checker = 'flake8 --ignore=E501'
 let g:synstatic_cpp_checkers= ['clang_check']
+let g:syntastic_cpp_compiler = 'clang++'
+if !exists('g:synstatic_cpp_compiler_options')
+    let g:synstatic_cpp_compiler_options='-std=c++11'
+endif
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:synstatic_cpp_compiler_options='-std=c++11'
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:flake8_ignore="E501,W293,E231"
+
