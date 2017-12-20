@@ -21,7 +21,7 @@ Bundle 'gmarik/vundle'
 " Bundle 'sjl/gundo.vim'
 Bundle 'derekwyatt/vim-scala'
 Bundle 'AutoComplPop'
-Bundle 'nvie/vim-flake8'
+" Bundle 'nvie/vim-flake8'
 " Bundle 'tpope/vim-fugitive'
 " Bundle 'jiangmiao/auto-pairs'
 Bundle 'Townk/vim-autoclose'
@@ -31,9 +31,10 @@ Bundle 'Townk/vim-autoclose'
 Bundle 'godlygeek/tabular'
 Bundle 'plasticboy/vim-markdown'
 
-" C++ Syntax Check
+" Syntax Check
 Bundle 'scrooloose/syntastic'
 
+set clipboard^=unnamed
 
 " vundle settings
 filetype indent plugin on
@@ -63,6 +64,20 @@ if exists("*mkdir") && !isdirectory($HOME."/.vim/backup")
     call mkdir($HOME."/.vim/backup")
 endif
 
+" function and alias to quick toggle number
+function! NoNum()
+         :set nornu
+         :set nonu
+endfunction
+
+function! YesNum()
+         :set rnu
+         :set nu
+endfunction
+
+command! Nonu exec NoNum()
+command! Nu exec YesNum()
+
 " undo, need vim 7.3
 " set undofile
 " set undodir=$HOME/.vim/undo/
@@ -80,7 +95,7 @@ set showbreak=>>\
 " :set listchars+=precedes:`,extends:`
 
 " VIM 7.4
-set relativenumber
+" set relativenumber
 "set number
 
 " other settings
@@ -300,11 +315,11 @@ endif
 "         au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
 "     endif
 " :au BufWinEnter * let w:m1=matchadd('Search', '\%<80v.\%>77v', -1)
-:au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
+" :au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
 
 "ignore E501 when dooing flake8 tests
-let g:flake8_ignore="E501"
-autocmd BufWritePost *.py call Flake8()
+" let g:flake8_ignore="E501"
+" autocmd BufWritePost *.py call Flake8()
 
 " vim-markdown
 let g:vim_markdown_folding_disabled = 1
@@ -352,17 +367,25 @@ let g:pymode_syntax_all = 1
 let g:pymode_syntax_indent_errors = g:pymode_syntax_all
 let g:pymode_syntax_space_errors = g:pymode_syntax_all
 
+"hi Folded ctermbg=242
+hi Folded ctermbg=235
+set foldmethod=syntax
+set foldlevelstart=20
+
+
 " Don't autofold code
 let g:pymode_folding = 0
 
-let g:syntastic_python_checker = 'flake8 --ignore=E501'
+let g:loaded_syntastic_python_python_checker = 1
+" let g:syntastic_python_checkers = ['flake8 --ignore=E501']
+let g:syntastic_python_checkers = ['flake8']
+" let g:syntastic_python_checker = 'flake8 --ignore=E501'
 let g:synstatic_cpp_checkers= ['clang_check']
 let g:syntastic_cpp_compiler = 'clang++'
 if !exists('g:synstatic_cpp_compiler_options')
-    let g:synstatic_cpp_compiler_options='-std=c++11'
+    let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++'
 endif
 
-let g:synstatic_cpp_compiler_options='-std=c++11'
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:flake8_ignore="E501,W293,E231"
+" let g:flake8_ignore="E501,W293,E231"
 
