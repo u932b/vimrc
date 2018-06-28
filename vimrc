@@ -15,7 +15,10 @@ Bundle 'gmarik/vundle'
 
 " bundles
 " Bundle 'Lokaltog/vim-easymotion'
-" Bundle 'scrooloose/nerdtree'
+Bundle 'scrooloose/nerdtree'
+Bundle 'Xuyuanp/nerdtree-git-plugin'
+
+
 " Bundle 'msanders/snipmate.vim'
 " Bundle 'tpope/vim-surround'
 " Bundle 'sjl/gundo.vim'
@@ -173,22 +176,24 @@ endif
 " vmap k gk
 " imap <C-D>      <DEL>
 " nmap <F6>       :w<CR>:call Flake8()<CR>
-" nmap <Leader>m  :set nu!<CR>
+nmap <Leader>m  :set nu!<CR>
 " imap <C-a>      <HOME>
 " imap <C-e>      <END>
 " imap <C-f>      <RIGHT>
 " imap <C-b>      <LEFT>
 " nmap <C-D>      ddkP==
 " nmap <C-U>      ddp==
-" nmap <Leader>n  :NERDTreeToggle<CR>
+
+nnoremap <Leader>n  :NERDTreeToggle<CR>
+
 " nmap <Leader>g  :GundoToggle<CR>
 " nmap <Leader>b  :e ++enc=big5<CR>
 " nmap <Leader>u  :e ++enc=utf-8<CR>
-" nmap <Leader>p  :set paste!<CR>
+nmap <Leader>p  :set paste!<CR>
 " nmap <Leader>r  :set wrap!<CR>
 " nmap <Leader>ev :tabnew $MYVIMRC<CR>
-" nmap <Leader>h  :noh<CR>
-" nmap <Leader>s  :w<CR>:source %<CR>
+nmap <Leader>h  :noh<CR>
+nmap <Leader>s  :w<CR>:source %<CR>
 " nmap <Leader>l  :set list!<CR>
 
 " " for fakeclip
@@ -260,8 +265,33 @@ set statusline+=%p%%
 " set completeopt-=preview
 "
 " " NERDTree
-" let NERDTreeQuitOnOpen=1
-" let g:NERDTreeDirArrows=0
+"" Beautify
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrows = 1
+let NERDChristmasTree = 1
+let NERDTreeChDirMode = 2
+let NERDTreeHighlightCursorline = 1
+
+"" run it until all initialization is finished.
+" autocmd vimenter * NERDTree
+"" don't automatically close NerdTree when you open a file:
+let NERDTreeQuitOnOpen = 0 
+"" close nerdTree when :q
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+
+"" open NERDTree to current file and move cursor to main window
+" autocmd BufEnter * if &modifiable | NERDTreeFind | wincmd p | endif
+autocmd VimEnter * if &modifiable | NERDTreeFind | wincmd p | endif
+autocmd VimEnter * NERDTreeToggle
+"" move cursor to main window
+" autocmd VimEnter * wincmd p
+"" Open NerdTree by default with no command line arguments
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+
+
 "
 " " vimim
 " let g:vimim_cloud = -1
@@ -388,4 +418,3 @@ endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " let g:flake8_ignore="E501,W293,E231"
-
