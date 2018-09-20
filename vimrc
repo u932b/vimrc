@@ -13,10 +13,12 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 Bundle 'gmarik/vundle'
 
-" bundles
+"" bundles
 " Bundle 'Lokaltog/vim-easymotion'
+" nerdtree related
 Bundle 'scrooloose/nerdtree'
 Bundle 'Xuyuanp/nerdtree-git-plugin'
+Bundle 'jistr/vim-nerdtree-tabs'
 
 
 " Bundle 'msanders/snipmate.vim'
@@ -25,7 +27,7 @@ Bundle 'Xuyuanp/nerdtree-git-plugin'
 Bundle 'derekwyatt/vim-scala'
 Bundle 'AutoComplPop'
 " Bundle 'nvie/vim-flake8'
-" Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-fugitive'
 " Bundle 'jiangmiao/auto-pairs'
 Bundle 'Townk/vim-autoclose'
 " Bundle 'klen/python-mode'
@@ -35,7 +37,8 @@ Bundle 'godlygeek/tabular'
 Bundle 'plasticboy/vim-markdown'
 
 " Syntax Check
-Bundle 'scrooloose/syntastic'
+Bundle 'vim-syntastic/syntastic'
+Bundle 'Chiel92/vim-autoformat'
 
 set clipboard^=unnamed
 
@@ -43,7 +46,7 @@ set clipboard^=unnamed
 filetype indent plugin on
 
 " indent
-set expandtab
+set expandtab " tabs are spaces
 set smarttab
 set autoindent
 set smartindent
@@ -53,12 +56,12 @@ set hls
 
 " the WiLd menu
 set wildmode=longest:full
-set wildmenu
+set wildmenu " visual autocomplete for command menu
 
 " tab and space
 set shiftwidth=4
-set tabstop=4
-set softtabstop=4
+set tabstop=4 " number of visual spaces per TAB
+set softtabstop=4 " number of spaces in tab when editing
 
 " backup info
 set backup
@@ -72,12 +75,10 @@ function! NoNum()
          :set nornu
          :set nonu
 endfunction
-
 function! YesNum()
          :set rnu
          :set nu
 endfunction
-
 command! Nonu exec NoNum()
 command! Nu exec YesNum()
 
@@ -91,7 +92,7 @@ set clipboard=unnamed
 
 " set line break
 set wrap
-set linebreak
+set linebreak " Causes vim to not wrap text in the middle of a word
 set showbreak=>>\
 "" these two work with nowrap
 " :set sidescroll=5
@@ -103,7 +104,7 @@ set showbreak=>>\
 
 " other settings
 set nu
-syntax on
+syntax on " enable syntax processing
 set ruler
 set mouse=a
 set bs=2
@@ -111,26 +112,13 @@ set nocompatible
 set showcmd
 set clipboard=unnamed
 set hid
-" Ignore case when searching
 set ignorecase
-
-" When searching try to be smart about cases
 set smartcase
-
-" Highlight search results
-set hlsearch
-
-" Makes search act like search in modern browsers
-set incsearch
-
-" Don't redraw while executing macros (good performance config)
-set lazyredraw
-
-" For regular expressions turn magic on
-set magic
-
-" Show matching brackets when text indicator is over them
-set showmatch
+set hlsearch " highlight matches
+set incsearch " search as characters are entered
+set lazyredraw " redraw only when we need to.
+set magic " For regular expressions turn magic on
+set showmatch " Show matching brackets when text indicator is over them
 
 " Configure backspace so it acts as it should act
 set backspace=eol,start,indent
@@ -156,7 +144,7 @@ autocmd BufReadPost,BufNewFile httpd*.conf set filetype=apache
 "autocmd BufReadPost,BufNewFile *.html set sw=2 ts=2 softtabstop=2
 
 " Show diff when git commit
-autocmd FileType gitcommit DiffGitCached
+" autocmd FileType gitcommit DiffGitCached
 
 " Save last postion
 if has("autocmd")
@@ -168,15 +156,14 @@ endif
 
 " key mapping
 " let mapleader=","
-" nmap ; :
-" vmap ; :
-" nmap j gj
-" nmap k gk
-" vmap j gj
-" vmap k gk
+nmap ; :
+vmap ; :
+nmap j gj
+nmap k gk
+vmap j gj
+vmap k gk
 " imap <C-D>      <DEL>
 " nmap <F6>       :w<CR>:call Flake8()<CR>
-nmap <Leader>m  :set nu!<CR>
 " imap <C-a>      <HOME>
 " imap <C-e>      <END>
 " imap <C-f>      <RIGHT>
@@ -184,16 +171,19 @@ nmap <Leader>m  :set nu!<CR>
 " nmap <C-D>      ddkP==
 " nmap <C-U>      ddp==
 
+nmap <Leader>m  :set nu!<CR>
 nnoremap <Leader>n  :NERDTreeToggle<CR>
+nmap <Leader>p  :set paste!<CR>
+nmap <Leader>h  :noh<CR>
+nmap <Leader>c  :SyntasticCheck<CR>
+nmap <Leader>s  :SyntasticToggleMode<CR>:edit<CR>
+" nmap <Leader>s  :w<CR>:source %<CR>
 
 " nmap <Leader>g  :GundoToggle<CR>
 " nmap <Leader>b  :e ++enc=big5<CR>
 " nmap <Leader>u  :e ++enc=utf-8<CR>
-nmap <Leader>p  :set paste!<CR>
 " nmap <Leader>r  :set wrap!<CR>
 " nmap <Leader>ev :tabnew $MYVIMRC<CR>
-nmap <Leader>h  :noh<CR>
-nmap <Leader>s  :w<CR>:source %<CR>
 " nmap <Leader>l  :set list!<CR>
 
 " " for fakeclip
@@ -252,19 +242,19 @@ set statusline=%{(&paste)?'[p]':''}
 set statusline+=%m%f
 set statusline+=%=
 set statusline+=(%{mode()})
-set statusline+=\ \
+" set statusline+=\ \
 set statusline+=[%{&fenc}]
-set statusline+=\ \
+" set statusline+=\ \
 set statusline+=[%{&ft!=''?&ft:'none'}]
-set statusline+=\ \
+" set statusline+=\ \
 set statusline+=Col\ %c,\ Line\ %l/%L
-set statusline+=\ \
+" set statusline+=\ \
 set statusline+=%p%%
 
 " " remove preview window from omni complete
 " set completeopt-=preview
 "
-" " NERDTree
+""""" NERDTree
 "" Beautify
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
@@ -275,11 +265,10 @@ let NERDTreeHighlightCursorline = 1
 "" run it until all initialization is finished.
 " autocmd vimenter * NERDTree
 "" don't automatically close NerdTree when you open a file:
-let NERDTreeQuitOnOpen = 0 
+let NERDTreeQuitOnOpen = 0
 "" close nerdTree when :q
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-
 "" open NERDTree to current file and move cursor to main window
 " autocmd BufEnter * if &modifiable | NERDTreeFind | wincmd p | endif
 autocmd VimEnter * if &modifiable | NERDTreeFind | wincmd p | endif
@@ -289,7 +278,12 @@ autocmd VimEnter * NERDTreeToggle
 "" Open NerdTree by default with no command line arguments
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-
+"" open just NERDTree if vim on a directory
+if isdirectory(argv(0))
+    bd
+    autocmd vimenter * exe "cd" argv(0)
+    autocmd VimEnter * NERDTree
+endif
 
 
 "
@@ -379,7 +373,7 @@ let g:pymode_doc = 1
 let g:pymode_doc_key = 'K'
 
 "Linting
-let g:pymode_lint = 1
+let g:pymode_lint = 0
 let g:pymode_lint_checker = "pyflakes,pep8"
 " Auto check on save
 let g:pymode_lint_write = 1
@@ -406,10 +400,19 @@ set foldlevelstart=20
 " Don't autofold code
 let g:pymode_folding = 0
 
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 let g:loaded_syntastic_python_python_checker = 1
 " let g:syntastic_python_checkers = ['flake8 --ignore=E501']
 let g:syntastic_python_checkers = ['flake8']
-" let g:syntastic_python_checker = 'flake8 --ignore=E501'
+" let g:syntastic_python_checker_args='--ignore=E501'
+let g:syntastic_python_flake8_args='--ignore=E501'
 let g:synstatic_cpp_checkers= ['clang_check']
 let g:syntastic_cpp_compiler = 'clang++'
 if !exists('g:synstatic_cpp_compiler_options')
