@@ -40,6 +40,8 @@ Bundle 'plasticboy/vim-markdown'
 Bundle 'vim-syntastic/syntastic'
 Bundle 'Chiel92/vim-autoformat'
 
+" Bundle 'davidhalter/jedi-vim'
+
 set clipboard^=unnamed
 
 " vundle settings
@@ -366,7 +368,7 @@ let g:vim_markdown_math = 1
 " [M            Jump on previous class or method (normal, visual, operator
 " modes)
 " ]M            Jump on next class or method (normal, visual, operator modes)
-let g:pymode_rope = 1
+let g:pymode_rope = 0
 
 " Documentation
 let g:pymode_doc = 1
@@ -412,7 +414,7 @@ let g:loaded_syntastic_python_python_checker = 1
 " let g:syntastic_python_checkers = ['flake8 --ignore=E501']
 let g:syntastic_python_checkers = ['flake8']
 " let g:syntastic_python_checker_args='--ignore=E501'
-let g:syntastic_python_flake8_args='--ignore=E501'
+let g:syntastic_python_flake8_args='--ignore=E501,F403,F405'
 let g:synstatic_cpp_checkers= ['clang_check']
 let g:syntastic_cpp_compiler = 'clang++'
 if !exists('g:synstatic_cpp_compiler_options')
@@ -421,3 +423,7 @@ endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " let g:flake8_ignore="E501,W293,E231"
+"
+let g:autoformat_verbosemode=1
+let g:formatdef_autopep8 = "'autopep8 - --ignore E24,E501'"
+let g:formatters_python = ['autopep8']
