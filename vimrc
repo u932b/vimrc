@@ -1,7 +1,18 @@
-"""""""""""""""""
-" .vimrc by dm4 "
-"               "
-"""""""""""""""""
+"""""""""""""""""""
+" .vimrc by u932b "
+"                 "
+"""""""""""""""""""
+
+" TODO:
+" 1. Refactoring: rope?
+" 2. Debugging: pudb?
+" 3. map more ALE commands
+" 4. Folds:
+" 5. use airline?
+" 6. Motion scrolling? vim-smoothie?
+" 7. What is NERDComment?
+" 8. figure out git
+" 9. figure out markdowm
 
 "language settings
 set langmenu=none
@@ -9,48 +20,50 @@ language messages en_US
 
 " vundle settings
 filetype off
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-Bundle 'gmarik/vundle'
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'gmarik/Vundle.vim'                  " Vundle Plugin Manager
 
-"" bundles
-" Bundle 'Lokaltog/vim-easymotion'
-" nerdtree related
-Bundle 'scrooloose/nerdtree'
-Bundle 'Xuyuanp/nerdtree-git-plugin'
-Bundle 'jistr/vim-nerdtree-tabs'
+"-------------------=== Code/Project navigation ===-------------
+" Project and file navigation
+Plugin 'scrooloose/nerdtree'
+Plugin 'majutsushi/tagbar'                  " Class/module browser
+Plugin 'Xuyuanp/nerdtree-git-plugin'        " NerdTree git functionality
+
+"-------------------=== Sytax Checking/completion ===-------------
+"Plugin 'Valloric/YouCompleteMe' " Code Completion
+Plugin 'dense-analysis/ale' " Async Lint Engine
+Plugin 'jiangmiao/auto-pairs'
+
+"-------------------=== Snippets support ===--------------------
+"Plugin 'SirVer/ultisnips' " Track the engine.
+"Plugin 'honza/vim-snippets' " Snippets are separated from the engine. Add this if you want them:
 
 
-" Bundle 'msanders/snipmate.vim'
-" Bundle 'tpope/vim-surround'
-" Bundle 'sjl/gundo.vim'
-Bundle 'derekwyatt/vim-scala'
-Bundle 'AutoComplPop'
-" Bundle 'nvie/vim-flake8'
-Bundle 'tpope/vim-fugitive'
-" Bundle 'jiangmiao/auto-pairs'
-Bundle 'Townk/vim-autoclose'
-" Bundle 'klen/python-mode'
+"-------------------=== Other ===-------------
+Plugin 'tpope/vim-fugitive'
 
-" Markdown support
-Bundle 'godlygeek/tabular'
-Bundle 'plasticboy/vim-markdown'
+"-------------------=== Markdown support ===-------------
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
 
-" Syntax Check
-Bundle 'vim-syntastic/syntastic'
-Bundle 'Chiel92/vim-autoformat'
-
-" Bundle 'davidhalter/jedi-vim'
-
-set clipboard^=unnamed
+call vundle#end()
 
 " vundle settings
-filetype indent plugin on
+filetype on
+filetype plugin on
+filetype plugin indent on
+
+"=====================================================
+"" General settings
+"=====================================================
+"
+set clipboard=unnamed " use system clipboard
 
 " indent
 set expandtab " tabs are spaces
-set smarttab
-set autoindent
+set smarttab " set tabs for a shifttabs logic
+set autoindent " indent when moving to the next line while writing code
 set smartindent
 set cindent
 set ignorecase
@@ -61,7 +74,7 @@ set wildmode=longest:full
 set wildmenu " visual autocomplete for command menu
 
 " tab and space
-set shiftwidth=4
+set shiftwidth=4 " shift lines by 4 spaces
 set tabstop=4 " number of visual spaces per TAB
 set softtabstop=4 " number of spaces in tab when editing
 
@@ -72,37 +85,23 @@ if exists("*mkdir") && !isdirectory($HOME."/.vim/backup")
     call mkdir($HOME."/.vim/backup")
 endif
 
-" function and alias to quick toggle number
-function! NoNum()
-         :set nornu
-         :set nonu
-endfunction
-function! YesNum()
-         :set rnu
-         :set nu
-endfunction
-command! Nonu exec NoNum()
-command! Nu exec YesNum()
-
 " undo, need vim 7.3
-" set undofile
-" set undodir=$HOME/.vim/undo/
-" if exists("*mkdir") && !isdirectory($HOME."/.vim/undo")
-"    call mkdir($HOME."/.vim/undo")
-" endif
-set clipboard=unnamed
+set undofile
+set undodir=$HOME/.vim/undo/
+if exists("*mkdir") && !isdirectory($HOME."/.vim/undo")
+   call mkdir($HOME."/.vim/undo")
+endif
 
 " set line break
 set wrap
-set linebreak " Causes vim to not wrap text in the middle of a word
-set showbreak=>>\
+set linebreak  " Causes vim to not wrap text in the middle of a word
+" set showbreak=>>\
 "" these two work with nowrap
 " :set sidescroll=5
 " :set listchars+=precedes:`,extends:`
 
-" VIM 7.4
-" set relativenumber
-"set number
+" Encoding
+set fileencodings=utf-8,big5,euc-jp,gbk,euc-kr,utf-bom,iso8859-1
 
 " other settings
 set nu
@@ -145,70 +144,6 @@ autocmd BufReadPost,BufNewFile httpd*.conf set filetype=apache
 "autocmd BufReadPost,BufNewFile *.rb set sw=2 ts=2 softtabstop=2
 "autocmd BufReadPost,BufNewFile *.html set sw=2 ts=2 softtabstop=2
 
-" Show diff when git commit
-" autocmd FileType gitcommit DiffGitCached
-
-" Save last postion
-if has("autocmd")
-   autocmd BufReadPost *
-      \ if line("'\"") > 0 && line ("'\"") <= line("$") |
-      \   exe "normal g'\"" |
-      \ endif
-endif
-
-" key mapping
-" let mapleader=","
-nmap ; :
-vmap ; :
-nmap j gj
-nmap k gk
-vmap j gj
-vmap k gk
-" imap <C-D>      <DEL>
-" nmap <F6>       :w<CR>:call Flake8()<CR>
-" imap <C-a>      <HOME>
-" imap <C-e>      <END>
-" imap <C-f>      <RIGHT>
-" imap <C-b>      <LEFT>
-" nmap <C-D>      ddkP==
-" nmap <C-U>      ddp==
-
-nmap <Leader>m  :set nu!<CR>
-nnoremap <Leader>n  :NERDTreeToggle<CR>
-nmap <Leader>p  :set paste!<CR>
-nmap <Leader>h  :noh<CR>
-nmap <Leader>c  :SyntasticCheck<CR>
-nmap <Leader>s  :SyntasticToggleMode<CR>:edit<CR>
-" nmap <Leader>s  :w<CR>:source %<CR>
-
-" nmap <Leader>g  :GundoToggle<CR>
-" nmap <Leader>b  :e ++enc=big5<CR>
-" nmap <Leader>u  :e ++enc=utf-8<CR>
-" nmap <Leader>r  :set wrap!<CR>
-" nmap <Leader>ev :tabnew $MYVIMRC<CR>
-" nmap <Leader>l  :set list!<CR>
-
-" " for fakeclip
-" vmap <Leader>v  "+y
-"
-" " ctrl-tab only works on gui
-" nmap <C-Tab>    gt
-noremap <Up> <NOP>
-noremap <Down> <NOP>
-noremap <Left> <NOP>
-noremap <Right> <NOP>
-
-" Show syntax highlighting groups for word under cursor
-nmap <C-C> :call <SID>SynStack()<CR>
-function! <SID>SynStack()
-    if !exists("*synstack")
-        return
-    endif
-    echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
-endfunc
-
-" Encoding
-set fileencodings=utf-8,big5,euc-jp,gbk,euc-kr,utf-bom,iso8859-1
 
 " color setting
 if $TERM == "xterm-256color" || $TERM == "screen-256color"
@@ -223,20 +158,13 @@ endif
 " Highlight trailing spaces
 highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$/
-autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-autocmd BufWinLeave * call clearmatches()
-
-" Automatic Trim Whitespace on save
-fun! <SID>StripTrailingWhitespaces()
-    let l = line(".")
-    let c = col(".")
-    %s/\s\+$//e
-    call cursor(l, c)
-endfun
-autocmd FileType c,cpp,java,php,ruby,python autocmd BufWritePre <buffer> :call
-            \ <SID>StripTrailingWhitespaces()
+augroup highLightSpace
+    autocmd!
+    autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+    autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+    autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+    autocmd BufWinLeave * call clearmatches()
+augroup END
 
 " set status line
 set laststatus=2
@@ -253,177 +181,257 @@ set statusline+=Col\ %c,\ Line\ %l/%L
 " set statusline+=\ \
 set statusline+=%p%%
 
-" " remove preview window from omni complete
-" set completeopt-=preview
-"
-""""" NERDTree
+" folds settings
+"hi Folded ctermbg=242
+" hi Folded ctermbg=235
+" set foldmethod=syntax
+" set foldlevelstart=20
+
+"=====================================================
+"" key mappings
+"=====================================================
+nnoremap ; :
+vnoremap ; :
+nnoremap j gj
+nnoremap k gk
+vnoremap j gj
+vnoremap k gk
+" imap <C-D>      <DEL>
+" nmap <F6>       :w<CR>:call Flake8()<CR>
+" imap <C-a>      <HOME>
+" imap <C-e>      <END>
+" imap <C-f>      <RIGHT>
+" imap <C-b>      <LEFT>
+" nmap <C-D>      ddkP==
+" nmap <C-U>      ddp==
+nnoremap <leader>a :ALEFix<CR>
+nnoremap <silent> gd :ALEGoToDefinition<CR>
+nnoremap <Leader>d :DiffLS<CR>
+nnoremap <Leader>h :noh<CR>
+nnoremap <Leader>m :set nu!<CR>
+nnoremap <Leader>n :NERDTreeToggle<CR>
+nnoremap <Leader>p :set paste!<CR>
+nnoremap <Leader>t :TagbarToggle<CR>
+
+
+" Map the arrow keys to do absolutely nothing.
+noremap <Up> <NOP>
+noremap <Down> <NOP>
+noremap <Left> <NOP>
+noremap <Right> <NOP>
+
+
+
+"=====================================================
+"" custom functions
+"=====================================================
+" function and alias to quick toggle number
+function! NoNum()
+    :set nornu
+    :set nonu
+endfunction
+function! YesNum()
+    :set rnu
+    :set nu
+endfunction
+command! Nonu exec NoNum()
+command! Nu exec YesNum()
+
+" show diff between current unsaved version and the saved version.
+function! DiffLastSave()
+    :w !diff % -
+endfunction
+command! DiffLS exec DiffLastSave()
+
+" Automatic Trim Whitespace on save
+fun! <SID>StripTrailingWhitespaces()
+    let l = line(".")
+    let c = col(".")
+    %s/\s\+$//e
+    call cursor(l, c)
+endfun
+autocmd FileType c,cpp,java,php,ruby,python autocmd BufWritePre <buffer> :call
+            \ <SID>StripTrailingWhitespaces()
+
+" Show syntax highlighting groups for word under cursor, from dm4 and i dont
+" know how to use this yet
+nmap <C-C> :call <SID>SynStack()<CR>
+function! <SID>SynStack()
+    if !exists("*synstack")
+        return
+    endif
+    echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
+
+" Save last postion
+if has("autocmd")
+    autocmd BufReadPost *
+                \ if line("'\"") > 0 && line ("'\"") <= line("$") |
+                \   exe "normal g'\"" |
+                \ endif
+endif
+
+"=====================================================
+"" NERDTree settings
+"=====================================================
 "" Beautify
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
 let NERDChristmasTree = 1
 let NERDTreeChDirMode = 2
 let NERDTreeHighlightCursorline = 1
+let NERDTreeIgnore=['\.pyc$', '\.pyo$', '__pycache__$']     " Ignore files in NERDTree
+let NERDTreeWinSize=40
 
-"" run it until all initialization is finished.
-" autocmd vimenter * NERDTree
-"" don't automatically close NerdTree when you open a file:
-let NERDTreeQuitOnOpen = 0
-"" close nerdTree when :q
+" autocmd vimenter * NERDTree  " run it until all initialization is finished.
+" let NERDTreeQuitOnOpen = 0  " don't automatically close NerdTree when you open a file:
+
+" Automatically close the tab is the last window open is nerdtree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+
 "" open NERDTree to current file and move cursor to main window
-" autocmd BufEnter * if &modifiable | NERDTreeFind | wincmd p | endif
-autocmd VimEnter * if &modifiable | NERDTreeFind | wincmd p | endif
-autocmd VimEnter * NERDTreeToggle
-"" move cursor to main window
-" autocmd VimEnter * wincmd p
-"" Open NerdTree by default with no command line arguments
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-"" open just NERDTree if vim on a directory
+"autocmd BufEnter * if &modifiable | NERDTreeFind | wincmd p | endif
+"autocmd VimEnter * if &modifiable | NERDTreeFind | wincmd p | endif
+"" autocmd VimEnter * NERDTreeToggle
+"autocmd VimEnter * wincmd p " move cursor to main window
+
+""" Open NerdTree by default with no command line arguments
+"autocmd StdinReadPre * let s:std_in=1
+"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+" open just NERDTree if vim on a directory
 if isdirectory(argv(0))
     bd
     autocmd vimenter * exe "cd" argv(0)
     autocmd VimEnter * NERDTree
 endif
 
+""" hotfix for https://github.com/preservim/nerdtree/issues/911
+"let g:NERDTreeNodeDelimiter = "\u00a0"
 
-"
-" " vimim
-" let g:vimim_cloud = -1
-" let g:vimim_custom_color = -1
 
-" zencoding
-let g:user_zen_settings = {
-\  'indentation' : '    '
-\}
 
-" " clang_complete
-" let g:clang_snippets = 1
-" let g:clang_complete_copen = 0
-" let g:clang_snippets_engine = 'snipmate'
-
-if has("gui_running")
-    " set colors
-    colors dm4
-    set cursorline
-"    set guifont=Monaco:h17
-    set guifont=Source\ Code\ Pro\ Light:h16
-
-    " window size
-    set lines=100
-    set columns=90
-
-    " hide tool bar
-    set guioptions+=c
-    set guioptions-=e
-    set guioptions-=T
-    set guioptions-=m
-    set guioptions-=r
-    set guioptions-=R
-    set guioptions-=l
-    set guioptions-=L
-
-    " disable input manager
-    set imdisable
-    set antialias
-
-    if has("gui_macvim")
-        " set CMD+ENTER fullscreen
-        set fuopt=maxhorz,maxvert
-    endif
-endif
-
-" if exists('+colorcolumn')
-"       highlight ColorColumn ctermbg=91
-"       set colorcolumn=80
-"   else
-"         au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
+" "=====================================================
+" "" GUI settings
+" "=====================================================
+" " These are from dm4
+" if has("gui_running")
+"     " set colors
+"     colors dm4
+"     set cursorline
+"     "    set guifont=Monaco:h17
+"     set guifont=Source\ Code\ Pro\ Light:h16
+" 
+"     " window size
+"     set lines=100
+"     set columns=90
+" 
+"     " hide tool bar
+"     set guioptions+=c
+"     set guioptions-=e
+"     set guioptions-=T
+"     set guioptions-=m
+"     set guioptions-=r
+"     set guioptions-=R
+"     set guioptions-=l
+"     set guioptions-=L
+" 
+"     " disable input manager
+"     set imdisable
+"     set antialias
+" 
+"     if has("gui_macvim")
+"         " set CMD+ENTER fullscreen
+"         set fuopt=maxhorz,maxvert
 "     endif
-" :au BufWinEnter * let w:m1=matchadd('Search', '\%<80v.\%>77v', -1)
-" :au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
+" endif
 
-"ignore E501 when dooing flake8 tests
-" let g:flake8_ignore="E501"
-" autocmd BufWritePost *.py call Flake8()
 
-" vim-markdown
+"=====================================================
+"" vim-markdown settings
+"=====================================================
 let g:vim_markdown_folding_disabled = 1
 let g:vim_markdown_folding_style_pythonic = 1
 let g:vim_markdown_math = 1
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Python-mode
-" Activate rope
-" Keys:
-" K             Show python docs
-" <Ctrl-Space>  Rope autocomplete
-" <Ctrl-c>g     Rope goto definition
-" <Ctrl-c>d     Rope show documentation
-" <Ctrl-c>f     Rope find occurrences
-" <Leader>b     Set, unset breakpoint (g:pymode_breakpoint enabled)
-" [[            Jump on previous class or function (normal, visual, operator
-" modes)
-" ]]            Jump on next class or function (normal, visual, operator
-" modes)
-" [M            Jump on previous class or method (normal, visual, operator
-" modes)
-" ]M            Jump on next class or method (normal, visual, operator modes)
-let g:pymode_rope = 0
 
-" Documentation
-let g:pymode_doc = 1
-let g:pymode_doc_key = 'K'
+"=====================================================
+"" ale settings
+"=====================================================
 
-"Linting
-let g:pymode_lint = 0
-let g:pymode_lint_checker = "pyflakes,pep8"
-" Auto check on save
-let g:pymode_lint_write = 1
+let g:ale_linters = { "python": ["ruff", "pyright"]}
+let g:ale_fixers = { "python": ["black", "isort"]}
+let g:ale_python_isort_options = '-m 3 -tc'
+let b:ale_fix_on_save = 1
 
-" Support virtualenv
-let g:pymode_virtualenv = 1
+nmap <silent> <leader>aj :ALENext<cr>
+nmap <silent> <leader>ak :ALEPrevious<cr>
 
-" Enable breakpoints plugin
-let g:pymode_breakpoint = 1
-let g:pymode_breakpoint_key = '<leader>b'
-
-" syntax highlighting
-let g:pymode_syntax = 1
-let g:pymode_syntax_all = 1
-let g:pymode_syntax_indent_errors = g:pymode_syntax_all
-let g:pymode_syntax_space_errors = g:pymode_syntax_all
-
-"hi Folded ctermbg=242
-hi Folded ctermbg=235
-set foldmethod=syntax
-set foldlevelstart=20
-
-
-" Don't autofold code
-let g:pymode_folding = 0
-
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:loaded_syntastic_python_python_checker = 1
-" let g:syntastic_python_checkers = ['flake8 --ignore=E501']
-let g:syntastic_python_checkers = ['flake8']
-" let g:syntastic_python_checker_args='--ignore=E501'
-let g:syntastic_python_flake8_args='--ignore=E501,F403,F405'
-let g:synstatic_cpp_checkers= ['clang_check']
-let g:syntastic_cpp_compiler = 'clang++'
-if !exists('g:synstatic_cpp_compiler_options')
-    let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++'
-endif
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" let g:flake8_ignore="E501,W293,E231"
+""=====================================================
+""" ycm settings
+""=====================================================
+"let g:ycm_autoclose_preview_window_after_completion=1
 "
-let g:autoformat_verbosemode=1
-let g:formatdef_autopep8 = "'autopep8 - --ignore E24,E501'"
-let g:formatters_python = ['autopep8']
+"" function! DisableYCM()
+""     :let g:ycm_auto_trigger=0
+"" endfunction
+"" function! EnableYCM()
+""     :let g:ycm_auto_trigger=1
+"" endfunction
+"" command! Yycm exec EnableYCM()
+"" command! Nycm exec DisableYCM()
+"" nnoremap <F9> :Yycm<CR>
+"" nnoremap <F10> :Nycm<CR>
+""
+""=====================================================
+""" UltiSnips settings
+""=====================================================
+"" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+"let g:UltiSnipsExpandTrigger="<tab>"
+"let g:UltiSnipsJumpForwardTrigger="<c-b>"
+"let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+"" If you want :UltiSnipsEdit to split your window.
+"let g:UltiSnipsEditSplit="vertical"
+"
+"" let g:UltiSnipsExpandTrigger="<c-j>"
+"function! g:UltiSnips_Complete()
+"  call UltiSnips#ExpandSnippet()
+"  if g:ulti_expand_res == 0
+"    if pumvisible()
+"      return "\<C-n>"
+"    else
+"      call UltiSnips#JumpForwards()
+"      if g:ulti_jump_forwards_res == 0
+"        return "\<TAB>"
+"      endif
+"    endif
+"  endif
+"  return ""
+"endfunction
+"
+"function! g:UltiSnips_Reverse()
+"  call UltiSnips#JumpBackwards()
+"  if g:ulti_jump_backwards_res == 0
+"    return "\<C-P>"
+"  endif
+"
+"  return ""
+"endfunction
+"
+"
+"if !exists("g:UltiSnipsJumpForwardTrigger")
+"  let g:UltiSnipsJumpForwardTrigger = "<tab>"
+"endif
+"
+"if !exists("g:UltiSnipsJumpBackwardTrigger")
+"  let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+"endif
+"" 
+"" au InsertEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger     . " <C-R>=g:UltiSnips_Complete()<cr>"
+"" au InsertEnter * exec "inoremap <silent> " .     g:UltiSnipsJumpBackwardTrigger . " <C-R>=g:UltiSnips_Reverse()<cr>"
+"
+"=====================================================
+"" autopairs settings
+"=====================================================
+let g:AutoPairs={'(':')', '[':']', '{':'}',"`":"`", '```':'```', '"""':'"""', "'''":"'''"}
+
