@@ -312,41 +312,6 @@ endif
 
 
 
-" "=====================================================
-" "" GUI settings
-" "=====================================================
-" " These are from dm4
-" if has("gui_running")
-"     " set colors
-"     colors dm4
-"     set cursorline
-"     "    set guifont=Monaco:h17
-"     set guifont=Source\ Code\ Pro\ Light:h16
-" 
-"     " window size
-"     set lines=100
-"     set columns=90
-" 
-"     " hide tool bar
-"     set guioptions+=c
-"     set guioptions-=e
-"     set guioptions-=T
-"     set guioptions-=m
-"     set guioptions-=r
-"     set guioptions-=R
-"     set guioptions-=l
-"     set guioptions-=L
-" 
-"     " disable input manager
-"     set imdisable
-"     set antialias
-" 
-"     if has("gui_macvim")
-"         " set CMD+ENTER fullscreen
-"         set fuopt=maxhorz,maxvert
-"     endif
-" endif
-
 
 "=====================================================
 "" vim-markdown settings
@@ -367,69 +332,6 @@ let b:ale_fix_on_save = 1
 nmap <silent> <leader>aj :ALENext<cr>
 nmap <silent> <leader>ak :ALEPrevious<cr>
 
-""=====================================================
-""" ycm settings
-""=====================================================
-"let g:ycm_autoclose_preview_window_after_completion=1
-"
-"" function! DisableYCM()
-""     :let g:ycm_auto_trigger=0
-"" endfunction
-"" function! EnableYCM()
-""     :let g:ycm_auto_trigger=1
-"" endfunction
-"" command! Yycm exec EnableYCM()
-"" command! Nycm exec DisableYCM()
-"" nnoremap <F9> :Yycm<CR>
-"" nnoremap <F10> :Nycm<CR>
-""
-""=====================================================
-""" UltiSnips settings
-""=====================================================
-"" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-"let g:UltiSnipsExpandTrigger="<tab>"
-"let g:UltiSnipsJumpForwardTrigger="<c-b>"
-"let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-"" If you want :UltiSnipsEdit to split your window.
-"let g:UltiSnipsEditSplit="vertical"
-"
-"" let g:UltiSnipsExpandTrigger="<c-j>"
-"function! g:UltiSnips_Complete()
-"  call UltiSnips#ExpandSnippet()
-"  if g:ulti_expand_res == 0
-"    if pumvisible()
-"      return "\<C-n>"
-"    else
-"      call UltiSnips#JumpForwards()
-"      if g:ulti_jump_forwards_res == 0
-"        return "\<TAB>"
-"      endif
-"    endif
-"  endif
-"  return ""
-"endfunction
-"
-"function! g:UltiSnips_Reverse()
-"  call UltiSnips#JumpBackwards()
-"  if g:ulti_jump_backwards_res == 0
-"    return "\<C-P>"
-"  endif
-"
-"  return ""
-"endfunction
-"
-"
-"if !exists("g:UltiSnipsJumpForwardTrigger")
-"  let g:UltiSnipsJumpForwardTrigger = "<tab>"
-"endif
-"
-"if !exists("g:UltiSnipsJumpBackwardTrigger")
-"  let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-"endif
-"" 
-"" au InsertEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger     . " <C-R>=g:UltiSnips_Complete()<cr>"
-"" au InsertEnter * exec "inoremap <silent> " .     g:UltiSnipsJumpBackwardTrigger . " <C-R>=g:UltiSnips_Reverse()<cr>"
-"
 "=====================================================
 "" autopairs settings
 "=====================================================
